@@ -12,6 +12,8 @@
 *.o 
 *.d 
 *-test
+*_test
+
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
