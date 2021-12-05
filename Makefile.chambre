@@ -6,7 +6,7 @@ DEPFLAGS   = -MMD
 LDFLAGS    =
 SRCS       = chambre_test.cpp chambre.cpp
 OBJS       = $(SRCS:.cpp=.o)
-TARGET     = chambre_test
+TARGET     = chambre-test
 DEPS	   = $(OBJS:.o=.d)
 
 all: $(TARGET)
