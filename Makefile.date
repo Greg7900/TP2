@@ -6,7 +6,7 @@ DEPFLAGS   = -MMD
 LDFLAGS    =
 SRCS       = date_test.cpp date.cpp
 OBJS       = $(SRCS:.cpp=.o)
-TARGET     = date_test
+TARGET     = date-test
 DEPS	   = $(OBJS:.o=.d)
 
 all: $(TARGET)
