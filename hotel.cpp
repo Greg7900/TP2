@@ -1,9 +1,9 @@
 #include "hotel.h"
 
-   Hotel::Hotel(std::string idUnique, std::string nom, std::string ville, int nombredechambre ): _idUnique(idUnique), _nom(nom),_ville(ville), _nombredechambre(nombredechambre){}
+   Hotel::Hotel(std::string idUnique, std::string nom, std::string ville): _idUnique(idUnique), _nom(nom),_ville(ville){}
    
-   //int nb=nombredechambre();
-   //std::array<int, nb> nbChambre;
+   
+   
 
    std::string  Hotel::idUnique() const{
    	return _idUnique;
@@ -14,8 +14,9 @@
    std::string Hotel::ville() const{
    	return _ville;
    }
-   int Hotel::nombredechambre() const{
-   	return _nombredechambre;
+   int Hotel::NbChambre() const{
+
+   	return _Chambre.size();
    }
    
    void Hotel::updateIdUnique(std::string idUnique){
@@ -27,10 +28,10 @@
    void Hotel::updateVille(std::string ville){
    	_ville=ville;
    }
-   void Hotel::updateNbChambre(int nombredechambre){
-   	_nombredechambre=nombredechambre;
+   void Hotel::updateNbChambre(int nbChambre){
+   	_Chambre.resize(nbChambre);
    }
    std::ostream& operator<<(std::ostream& os, const Hotel& hotel) {
-        os << "Identifiant unique :" + hotel.idUnique() + " Nom : " + hotel.nom()+ " ville : "+ hotel.ville()+ " Nombre de chambre : "+ std::to_string(hotel.nombredechambre());
+        os << "Identifiant unique : " + hotel.idUnique() + " Nom : " + hotel.nom()+ " ville : "+ hotel.ville()+ " Nombre de chambre : "+ std::to_string(hotel.NbChambre());
         return os;
     }
