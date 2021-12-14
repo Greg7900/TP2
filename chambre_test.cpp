@@ -3,7 +3,8 @@
 #include <iostream>
 
 int main(int argc, char const *argv[]) {
-  Chambre chambre1(150,217,"single");
+  chambre::Chambre chambre1(150,217,"single");
+  std::cout<< toString(chambre1)<<std::endl;
   std::cout << chambre1 << std::endl;
   chambre1.updatePrix(240);
   chambre1.updateNumero(056);

@@ -1,6 +1,7 @@
 #ifndef CHAMBRE_H
 #define CHAMBRE_H
 #include <iostream>
+namespace chambre{
 class Chambre {
 public:
    Chambre(int prix, int numero, std::string type);
@@ -17,7 +18,8 @@ private:
    std::string _type;
    
 };
-
+std::string toString(Chambre chambre);
 
 std::ostream& operator<<(std::ostream& os, const Chambre& chambre);
 #endif
+}

@@ -9,7 +9,7 @@
 #include <assert.h> 
 
 
-
+namespace date {
 Date::Date(int month, int day, int year) : _month(month), _day(day), _year(year) {
     bool status = isDate(month, day, year);
     assert(status && "Date is not valid");
@@ -234,3 +234,4 @@ Date operator + (const Date& date, const int days) {
         os << std::to_string(date.day()) + "/" + std::to_string(date.month());
         return os;
     }
+}

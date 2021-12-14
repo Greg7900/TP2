@@ -4,9 +4,9 @@ CXX        = g++
 CXXFLAGS   = -Wall -std=c++17
 DEPFLAGS   = -MMD
 LDFLAGS    =
-SRCS       = hotel_test.cpp hotel.cpp chambre.cpp
+SRCS       = reservation_test.cpp reservation.cpp date.cpp
 OBJS       = $(SRCS:.cpp=.o)
-TARGET     = hotel-test
+TARGET     = reservation-test
 DEPS	   = $(OBJS:.o=.d)
 
 all: $(TARGET)

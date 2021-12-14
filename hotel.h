@@ -1,6 +1,7 @@
 #ifndef HOTEL_H
 #define HOTEL_H
 #include <iostream>
+#include "chambre.h"
 #include <vector>
 
 class Hotel {
@@ -11,18 +12,19 @@ public:
    std::string  nom() const;
    std::string ville() const;
    int NbChambre() const;
+   void displayChambre()const;
 
    void updateIdUnique(std::string idUnique);
    void updateNom(std::string nom);
    void updateVille(std::string ville);
-   void updateNbChambre(int nbChambre);
+   void updateNbChambre(chambre::Chambre nbChambre);
   
 private:
    std::string _idUnique;
    std::string _nom;
    std::string _ville;
    int _nombredechambre;
-   std::vector<std::string> _Chambre;
+   std::vector<chambre::Chambre> _Chambre;
    
 
 

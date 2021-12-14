@@ -11,6 +11,7 @@
 #ifndef DATE_H
 #define DATE_H
 #include <iostream>
+namespace date {
 class Date {
 public:
    Date(int month=1, int day=1, int year=2020);
@@ -51,4 +52,4 @@ std::string toString(Date d);
    Date operator -- (Date& date, int); // use int paramater for postfix decrement: date--
    std::ostream& operator<<(std::ostream& os, const Date& date);
 #endif
-
+}

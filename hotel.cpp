@@ -18,7 +18,11 @@
 
    	return _Chambre.size();
    }
-   
+   void Hotel::displayChambre()const{
+      for(auto it=_Chambre.begin(); it!=_Chambre.end();it++){
+         std::cout<<*it<<std::endl;
+      }
+   }
    void Hotel::updateIdUnique(std::string idUnique){
    	_idUnique=idUnique;
    }
@@ -28,10 +32,14 @@
    void Hotel::updateVille(std::string ville){
    	_ville=ville;
    }
-   void Hotel::updateNbChambre(int nbChambre){
-   	_Chambre.resize(nbChambre);
+   void Hotel::updateNbChambre(chambre::Chambre nbChambre){
+   	_Chambre.push_back(nbChambre);
    }
+   
    std::ostream& operator<<(std::ostream& os, const Hotel& hotel) {
-        os << "Identifiant unique : " + hotel.idUnique() + " Nom : " + hotel.nom()+ " ville : "+ hotel.ville()+ " Nombre de chambre : "+ std::to_string(hotel.NbChambre());
+        os << "Identifiant unique : " + hotel.idUnique() + " Nom : " + hotel.nom()+ " ville : "+ hotel.ville()+ " Nombre de chambre : "+ std::to_string(hotel.NbChambre())<< std::endl;
+
+        hotel.displayChambre();
+
         return os;
     }

@@ -4,7 +4,7 @@
 #include <iostream>
 
 int main(int argc, char const *argv[]) {
-  Date dateTest(12,31,2021);
+  date::Date dateTest(12,31,2021);
   std::cout << "Date: " << toString(dateTest) << std::endl;
   std::cout << "day #" << dayOfYear(dateTest) << std::endl;
   dateTest.next();
