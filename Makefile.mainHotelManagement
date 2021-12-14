@@ -1,12 +1,12 @@
-# Makefile with dependencies management (Q4)
+# Makefile with dependencies management (Q6)
 
 CXX        = g++
 CXXFLAGS   = -Wall -std=c++17
 DEPFLAGS   = -MMD
 LDFLAGS    =
-SRCS       = clients.cpp clients-test.cpp
+SRCS       = hotel.cpp reservation.cpp clients.cpp chambre.cpp date.cpp mainHotelManagement.cpp 
 OBJS       = $(SRCS:.cpp=.o)
-TARGET     = clients-test
+TARGET     = main-test
 DEPS	   = $(OBJS:.o=.d)
 
 all: $(TARGET)

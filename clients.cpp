@@ -1,7 +1,7 @@
-#include "Clients.h"
+#include "clients.h"
 #include <iostream>
 
-
+namespace clients {
     Clients::Clients(std::string firstname, std::string lastname, std::string ID) : _firstname(firstname), _lastname(lastname), _ID(ID) {
     }
 
@@ -40,3 +40,4 @@
 	void Clients::SetID(std::string ID){
 	_ID = ID;
 	}
+}

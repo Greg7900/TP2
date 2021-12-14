@@ -1,6 +1,6 @@
 #include <iostream>
 
-
+	namespace clients {
 	class Clients{
 
 
@@ -25,3 +25,5 @@
 
 			std::string getFullName(const Clients &p);
 			std::ostream& operator << (std::ostream& os,const Clients &clients);
+
+}

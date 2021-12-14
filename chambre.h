@@ -22,4 +22,5 @@ std::string toString(Chambre chambre);
 
 std::ostream& operator<<(std::ostream& os, const Chambre& chambre);
 #endif
+
 }

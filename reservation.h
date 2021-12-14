@@ -2,7 +2,7 @@
 #define RESERVATION_H
 #include <iostream>
 #include "date.h"
-#include "chambre.h"
+#include "clients.h"
 class Reservation {
 public:
    Reservation(date::Date Ddate, int nightNbr, int NumChambre, std::string idHotel,std::string idClient);

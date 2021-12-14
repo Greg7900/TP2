@@ -10,7 +10,7 @@ int main(int argc, char const *argv[]) {
   std::cout << hotel1 << std::endl;
   hotel1.updateNbChambre(chambre1);
 
-  sstd::cout << hotel1 << std::endl;
+  std::cout << hotel1 << std::endl;
   hotel1.updateNbChambre(chambre2);
   std::cout << hotel1 << std::endl;
   
