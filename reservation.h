@@ -3,6 +3,7 @@
 #include <iostream>
 #include "date.h"
 #include "clients.h"
+namespace reservation{
 class Reservation {
 public:
    Reservation(date::Date Ddate, int nightNbr, int NumChambre, std::string idHotel,std::string idClient);
@@ -31,3 +32,4 @@ private:
 double CalculPrix(int nightNbr);
 std::ostream& operator<<(std::ostream& os, const Reservation& reservation);
 #endif
+}

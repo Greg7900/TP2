@@ -40,4 +40,11 @@ namespace clients {
 	void Clients::SetID(std::string ID){
 	_ID = ID;
 	}
+
+bool operator == (const Clients& c1,const Clients& c2) { // check for equality
+        if( (c1.Getfirstname()==c2.Getfirstname()) && (c1.Getlastname()==c2.Getlastname())&& (c1.GetID()==c2.GetID())) {
+            return true;
+        }
+    return false;
+  }
 }

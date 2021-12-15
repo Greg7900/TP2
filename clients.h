@@ -26,4 +26,6 @@
 			std::string getFullName(const Clients &p);
 			std::ostream& operator << (std::ostream& os,const Clients &clients);
 
+
+bool operator == (const Clients& c1,const Clients& c2);
 }

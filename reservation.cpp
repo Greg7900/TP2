@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-
+namespace reservation{
 
 Reservation::Reservation(date::Date Ddate, int nightNbr, int NumChambre, std::string idHotel,std::string idClient) : _Ddate(Ddate), _nightNbr(nightNbr),_NumChambre(NumChambre),_idHotel(idHotel),_idClient(idClient){}
 
@@ -50,3 +50,5 @@ std::ostream& operator<<(std::ostream& os, const Reservation& reservation){
 	os << " idClient :" + reservation.idClient() + " idHotel : " + reservation.idHotel()+ " NumChambre : "+ std::to_string(reservation.NumChambre())+ " date de debut : "+ toString(reservation.Ddate());
     return os;
     }
+
+}
