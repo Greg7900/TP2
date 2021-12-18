@@ -5,7 +5,8 @@
 
 namespace reservation{
 
-Reservation::Reservation(date::Date Ddate, int nightNbr, int NumChambre, std::string idHotel,std::string idClient) : _Ddate(Ddate), _nightNbr(nightNbr),_NumChambre(NumChambre),_idHotel(idHotel),_idClient(idClient){}
+Reservation::Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,clients::Clients client) : 
+_Ddate(Ddate), _nightNbr(nightNbr),_hotel(hotel),_type(type),_client(client){}
 
 
 
@@ -15,8 +16,8 @@ date::Date Reservation::Ddate() const{
 int Reservation::nightNbr() const{
 	return _nightNbr;
 }
-int Reservation::NumChambre() const{
-	return _NumChambre;
+std::string Reservation::type() const{
+	return _type;
 }
 std::string Reservation::idClient() const{
 	return _idClient;
@@ -31,8 +32,8 @@ void Reservation::updateDdate(date::Date Ddate){
 void Reservation::updatenightNbr(int nightNbr){
 	_nightNbr=nightNbr;
 }
-void Reservation::updateNumChambre(int NumChambre){
-	_NumChambre=NumChambre;
+void Reservation::updateType(std::string type){
+	_type=type;
 }
 void Reservation::updateidHotel(std::string idHotel){
 	_idHotel=idHotel;
@@ -47,8 +48,15 @@ void Reservation::updatePrixTot(int nightNbr){
 
 
 std::ostream& operator<<(std::ostream& os, const Reservation& reservation){
-	os << " idClient :" + reservation.idClient() + " idHotel : " + reservation.idHotel()+ " NumChambre : "+ std::to_string(reservation.NumChambre())+ " date de debut : "+ toString(reservation.Ddate());
+	os << " --> idClient: " + reservation.idClient() + " | idHotel: " + reservation.idHotel()+ " | type: "+ reservation.type()+ " | date de debut: "+ toString(reservation.Ddate());
     return os;
     }
 
+
+bool operator == (const Reservation& r1,const Reservation& r2){
+        if( (r1.Ddate()==r2.Ddate()) && (r1.idClient()==r2.idClient())&& (r1.idHotel()==r2.idHotel()) && r1.type()==r2.type()) {
+            return true;
+        }
+    return false;
+  }
 }

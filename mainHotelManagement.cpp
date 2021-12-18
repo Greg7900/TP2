@@ -2,7 +2,7 @@
 #include "hotel.h"
 #include <iostream>
 #include <algorithm>
-void SaisieClient (std::vector<clients::Clients>& tab){
+void SaisieReserv (std::vector<clients::Clients>& tab,std::vector<reservation::Reservation>& res, hotel:Hotel& hotel){
     
     std::string nom, prenon, idClient;
     std::cout<< " Enter Customer firstname : " ;
@@ -19,12 +19,11 @@ void SaisieClient (std::vector<clients::Clients>& tab){
       std::cout<< " Le client a été saisie "<<std::endl;
       tab.push_back(client);
     }
-    //std::cout<<tab;
-
-}
-void ReservClient (std::vector<reservation::Reservation>& Res){
+    std::cout << std::endl;
     
-    int jour, mois, annee, nightnbr;
+
+    int jour, mois, annee, nightnbr, choix=0;
+    std::string type, idhotel;
     std::cout<< " Enter Reservation day : " ;
     std::cin>> jour;
     std::cout<< " Enter Reservation month : " ;
@@ -42,19 +41,28 @@ void ReservClient (std::vector<reservation::Reservation>& Res){
       std::cout<< " Night number invalid : " ;
       std::cin>> nightnbr;
     }
-    reservation::Reservation reservation(date1,nightnbr);
-    if(std::find(Res.begin(),Res.end(),Res)!=Res.end())
+    
+    std::cout<< " Enter your room type : " ;
+    std::cout<< " Press 1 for : single, 2 for double and 3 for suite" <<std::endl;
+    std::cin>>choix;
+    switch (choix) {
+    case 1: type= "single";break;
+    case 2: type= "double";break;
+    case 3: type= "suite";break;
+    }
+    std::cout << " You choose the "<<type<< " type"<<std::endl;
+
+    reservation::Reservation reservation1(date1,nightnbr,idhotel,type,idClient);
+    if(std::find(res.begin(),res.end(),reservation1)!=res.end())
     {
       std::cout<< " Reservation déja saisie "<<std::endl;
     }else{
       std::cout<< " La reservation a été saisie "<<std::endl;
-      Res.push_back(reservation);
+      res.push_back(reservation1);
     }
-    //std::cout<<Reserv;
+    std::cout << std::endl;
 
 }
-
-
   
   std::ostream& operator<<(std::ostream& os, const std::vector<clients::Clients>& vect) {
   os << "Client :"<<std::endl;
@@ -64,6 +72,15 @@ void ReservClient (std::vector<reservation::Reservation>& Res){
   os << std::endl;
   return os;
 }
+std::ostream& operator<<(std::ostream& os, const std::vector<reservation::Reservation>& reser) {
+  os << "Reservation :"<<std::endl;
+  os << " ";
+  for (auto number : reser)
+    os << number << " ";
+  os << std::endl;
+  return os;
+}
+
 
 int main(int argc, char const *argv[]) {
 
@@ -102,8 +119,10 @@ int main(int argc, char const *argv[]) {
   tabClient.push_back(client12);
   tabClient.push_back(client13);
   std::cout<<tabClient;
-  SaisieClient(tabClient);
-  ReservClient(Reserv);
+  SaisieReserv(tabClient,Reserv,hotel1);
+  std::cout<<tabClient;
+  std::cout<<Reserv;
+
   
   return 0;
 

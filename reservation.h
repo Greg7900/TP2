@@ -3,33 +3,38 @@
 #include <iostream>
 #include "date.h"
 #include "clients.h"
+#include "hotel.h"
 namespace reservation{
-class Reservation {
+class Reservation : hotel{
 public:
-   Reservation(date::Date Ddate, int nightNbr, int NumChambre, std::string idHotel,std::string idClient);
+   Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,clients::Clients client);
    date::Date Ddate() const;
    int nightNbr() const;
-   int NumChambre() const;
-   std::string idClient() const;
-   std::string idHotel() const;
+   std::string type() const;
+   clients::Clients client() const;
+   hotel::Hotel hotel() const;
 
    void updateDdate(date::Date Ddate);
    void updatenightNbr(int nightNbr);
-   void updateNumChambre(int NumChambre);
+   void updateType(std::string type);
    void updateidHotel(std::string idHotel);
    void updateidClient(std::string idClient);
    void updatePrixTot(int nightNbr);
 private:
    date::Date _Ddate;
    int _nightNbr;
-   int _NumChambre;
-   std::string _idHotel;
-   std::string _idClient;
+   std::string _type;
+   hotel::Hotel _hotel;
+   clients::Clients _client;
    double _prixTot;
    
 };
 
 double CalculPrix(int nightNbr);
 std::ostream& operator<<(std::ostream& os, const Reservation& reservation);
+bool operator == (const Reservation& r1,const Reservation& r2);
 #endif
 }
+
+//faire test available dans hotel pour connaitre la dispo dans l'hotel
+//et faire test pour savoir il y a deja une reserv sur la chambre

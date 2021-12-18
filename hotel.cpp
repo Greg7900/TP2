@@ -14,6 +14,7 @@
    std::string Hotel::ville() const{
    	return _ville;
    }
+   
    int Hotel::NbChambre() const{
 
    	return _Chambre.size();
@@ -37,7 +38,7 @@
    }
    
    std::ostream& operator<<(std::ostream& os, const Hotel& hotel) {
-        os << "Identifiant unique : " + hotel.idUnique() + " Nom : " + hotel.nom()+ " ville : "+ hotel.ville()+ " Nombre de chambre : "+ std::to_string(hotel.NbChambre())<< std::endl;
+        os << "--> Identifiant unique : " + hotel.idUnique() + " | Nom : " + hotel.nom()+ " | ville : "+ hotel.ville()+ " | Nombre de chambre : "+ std::to_string(hotel.NbChambre())<< std::endl;
 
         hotel.displayChambre();
 
