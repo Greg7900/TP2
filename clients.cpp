@@ -19,7 +19,9 @@ namespace clients {
     std::string Clients::GetID() const {
         return _ID;
     }
-
+    std::string display(Clients c) {
+    return c.Getfirstname() + " " + c.Getlastname() + " " +c.GetID();
+}
 
     std::ostream& operator << (std::ostream& os,const Clients &clients) {
         os << clients.Getfirstname() + " " + clients.Getlastname() + " " +clients.GetID() <<std::endl;

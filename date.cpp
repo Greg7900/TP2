@@ -177,7 +177,7 @@ Date operator + (const Date& date, const int days) {
     }
 
     bool operator == (const Date& d1,const Date& d2) { // check for equality
-        if( (d1.day()==d2.day()) && (d1.month()==d2.month())) {
+        if( (d1.day()==d2.day()) && (d1.month()==d2.month()) && (d1.year()==d2.year())) {
             return true;
         }
     return false;
@@ -189,7 +189,10 @@ Date operator + (const Date& date, const int days) {
 
     bool operator < (const Date& d1, const Date& d2) {
 
-        if (d1.month()<d2.month()) {
+        if(d1.year()<d2.year()){
+            return true;
+        }
+        else if (d1.month()<d2.month()) {
             return true;
         }
         else if (d1.month()>d2.month()) {
@@ -231,7 +234,7 @@ Date operator + (const Date& date, const int days) {
     }
 
     std::ostream& operator<<(std::ostream& os, const Date& date) {
-        os << std::to_string(date.day()) + "/" + std::to_string(date.month());
+        os << std::to_string(date.day()) + "/" + std::to_string(date.month())+ "/" + std::to_string(date.year())<<std::endl;
         return os;
     }
 }

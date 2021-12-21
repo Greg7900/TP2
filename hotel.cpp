@@ -1,5 +1,5 @@
 #include "hotel.h"
-
+namespace hotel {
    Hotel::Hotel(std::string idUnique, std::string nom, std::string ville): _idUnique(idUnique), _nom(nom),_ville(ville){}
    
    
@@ -38,9 +38,16 @@
    }
    
    std::ostream& operator<<(std::ostream& os, const Hotel& hotel) {
-        os << "--> Identifiant unique : " + hotel.idUnique() + " | Nom : " + hotel.nom()+ " | ville : "+ hotel.ville()+ " | Nombre de chambre : "+ std::to_string(hotel.NbChambre())<< std::endl;
+        os << " Identifiant unique : " + hotel.idUnique() + " | Nom : " + hotel.nom()+ " | ville : "+ hotel.ville()+ " | Nombre de chambre : "+ std::to_string(hotel.NbChambre())<< std::endl;
 
         hotel.displayChambre();
 
         return os;
     }
+   bool operator == (const Hotel& h1,const Hotel& h2) { // check for equality
+      if( (h1.idUnique()==h2.idUnique()) && (h1.nom()==h2.nom())&& (h1.ville()==h2.ville())) {
+         return true;
+        }
+    return false;
+  }
+ }

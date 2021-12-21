@@ -3,7 +3,7 @@
 #include <iostream>
 #include "chambre.h"
 #include <vector>
-
+namespace hotel {
 class Hotel {
 
 public:
@@ -32,4 +32,6 @@ private:
 	
 };
 std::ostream& operator<<(std::ostream& os, const Hotel& hotel) ;
+bool operator== (const Hotel& h1,const Hotel& h2);
 #endif
+}

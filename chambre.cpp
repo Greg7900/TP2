@@ -36,7 +36,7 @@ std::string toString(Chambre chambre){
     return  " prix : " + std::to_string(chambre.prix()) + " numero : " + std::to_string(chambre.numero()) + " type : "+ chambre.type() ;
 }
 std::ostream& operator<<(std::ostream& os, const Chambre& chambre) {
-        os << " prix :" + std::to_string(chambre.prix()) + " numero : " + std::to_string(chambre.numero())+ " type : "+ chambre.type();
+        os << " prix : " + std::to_string(chambre.prix()) + " numero : " + std::to_string(chambre.numero())+ " type : "+ chambre.type();
         return os;
     }
 }

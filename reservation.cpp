@@ -19,11 +19,11 @@ int Reservation::nightNbr() const{
 std::string Reservation::type() const{
 	return _type;
 }
-std::string Reservation::idClient() const{
-	return _idClient;
+clients::Clients Reservation::client() const{
+	return _client;
 }
-std::string Reservation::idHotel() const{
-	return _idHotel;
+hotel::Hotel Reservation::hotel() const{
+	return _hotel;
 }
 
 void Reservation::updateDdate(date::Date Ddate){
@@ -35,11 +35,11 @@ void Reservation::updatenightNbr(int nightNbr){
 void Reservation::updateType(std::string type){
 	_type=type;
 }
-void Reservation::updateidHotel(std::string idHotel){
-	_idHotel=idHotel;
+void Reservation::updateHotel(hotel::Hotel  hotel){
+	_hotel=hotel;
 }
-void Reservation::updateidClient(std::string idClient){
-	_idClient=idClient;
+void Reservation::updateClient(clients::Clients client){
+	_client=client;
 }
 void Reservation::updatePrixTot(int nightNbr){
 	_prixTot=(215*nightNbr);
@@ -48,13 +48,15 @@ void Reservation::updatePrixTot(int nightNbr){
 
 
 std::ostream& operator<<(std::ostream& os, const Reservation& reservation){
-	os << " --> idClient: " + reservation.idClient() + " | idHotel: " + reservation.idHotel()+ " | type: "+ reservation.type()+ " | date de debut: "+ toString(reservation.Ddate());
+	os<< "----------------------------------------------------Reservation----------------------------------------------------"<<std::endl;
+	os << " idClient: " ;os << reservation.client() << " idHotel: " ;os << reservation.hotel() << " Type: " ;os<< reservation.type()<<std::endl<< " date de debut: ";os<<reservation.Ddate();
+    os<< "--------------------------------------------------------Fin--------------------------------------------------------"<<std::endl;
     return os;
     }
 
 
 bool operator == (const Reservation& r1,const Reservation& r2){
-        if( (r1.Ddate()==r2.Ddate()) && (r1.idClient()==r2.idClient())&& (r1.idHotel()==r2.idHotel()) && r1.type()==r2.type()) {
+        if( (r1.Ddate()==r2.Ddate()) && (r1.client()==r2.client())&& (r1.hotel()==r2.hotel()) && r1.type()==r2.type()) {
             return true;
         }
     return false;

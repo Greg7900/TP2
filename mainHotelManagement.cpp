@@ -2,7 +2,7 @@
 #include "hotel.h"
 #include <iostream>
 #include <algorithm>
-void SaisieReserv (std::vector<clients::Clients>& tab,std::vector<reservation::Reservation>& res, hotel:Hotel& hotel){
+void SaisieReserv (std::vector<clients::Clients>& tab,std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
     
     std::string nom, prenon, idClient;
     std::cout<< " Enter Customer firstname : " ;
@@ -52,7 +52,7 @@ void SaisieReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
     }
     std::cout << " You choose the "<<type<< " type"<<std::endl;
 
-    reservation::Reservation reservation1(date1,nightnbr,idhotel,type,idClient);
+    reservation::Reservation reservation1(date1,nightnbr,hotel,type,client);
     if(std::find(res.begin(),res.end(),reservation1)!=res.end())
     {
       std::cout<< " Reservation déja saisie "<<std::endl;
@@ -86,7 +86,7 @@ int main(int argc, char const *argv[]) {
 
   std::vector<clients::Clients> tabClient;
   std::vector<reservation::Reservation> Reserv;
-  Hotel hotel1("OCEAN11","Le Bellagio","Las Vegas");
+  hotel::Hotel hotel1("OCEAN11","Le Bellagio","Las Vegas");
   chambre::Chambre chambre1(100,1,"single");
   chambre::Chambre chambre2(100,2,"single");
   chambre::Chambre chambre3(100,3,"single");

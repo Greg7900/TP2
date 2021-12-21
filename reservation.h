@@ -5,7 +5,7 @@
 #include "clients.h"
 #include "hotel.h"
 namespace reservation{
-class Reservation : hotel{
+class Reservation {
 public:
    Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,clients::Clients client);
    date::Date Ddate() const;
@@ -17,8 +17,8 @@ public:
    void updateDdate(date::Date Ddate);
    void updatenightNbr(int nightNbr);
    void updateType(std::string type);
-   void updateidHotel(std::string idHotel);
-   void updateidClient(std::string idClient);
+   void updateHotel(hotel::Hotel hotel);
+   void updateClient(clients::Clients client);
    void updatePrixTot(int nightNbr);
 private:
    date::Date _Ddate;
