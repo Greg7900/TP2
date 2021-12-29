@@ -5,10 +5,12 @@
 
 namespace reservation{
 
-Reservation::Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,clients::Clients client) : 
-_Ddate(Ddate), _nightNbr(nightNbr),_hotel(hotel),_type(type),_client(client){}
+Reservation::Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,clients::Clients client,int prix) : 
+_Ddate(Ddate), _nightNbr(nightNbr),_hotel(hotel),_type(type),_client(client),_prix(prix){}
 
-
+int Reservation::prix()const{
+	return _prix;
+}
 
 date::Date Reservation::Ddate() const{
 	return _Ddate;
@@ -25,7 +27,6 @@ clients::Clients Reservation::client() const{
 hotel::Hotel Reservation::hotel() const{
 	return _hotel;
 }
-
 void Reservation::updateDdate(date::Date Ddate){
 	_Ddate=Ddate;
 }
@@ -41,16 +42,27 @@ void Reservation::updateHotel(hotel::Hotel  hotel){
 void Reservation::updateClient(clients::Clients client){
 	_client=client;
 }
-void Reservation::updatePrixTot(int nightNbr){
-	_prixTot=(215*nightNbr);
-	
+void Reservation::updatePrix(int prix){
+	_prix=prix;
 }
+/*double Reservation::prixTot() {
+	if(_type=="single"){
+		_prixTot=(100*_nightNbr);
+	}else if(_type=="double"){
+		_prixTot=(125*_nightNbr);
+	}else if(_type=="suite"){
+		_prixTot=(210*_nightNbr);
+	}
+	return _prixTot;	
+}*/
 
 
 std::ostream& operator<<(std::ostream& os, const Reservation& reservation){
-	os<< "----------------------------------------------------Reservation----------------------------------------------------"<<std::endl;
-	os << " idClient: " ;os << reservation.client() << " idHotel: " ;os << reservation.hotel() << " Type: " ;os<< reservation.type()<<std::endl<< " date de debut: ";os<<reservation.Ddate();
-    os<< "--------------------------------------------------------Fin--------------------------------------------------------"<<std::endl;
+	//os<< "----------------------------------------------------Reservation----------------------------------------------------"<<std::endl;
+	os << " idClient: " ;os << reservation.client() << " idHotel: " ; afficheReduite(reservation.hotel()); os<< " Type: " ;os<< reservation.type()<<std::endl<< " date de debut: ";
+	os<<reservation.Ddate();
+	os<< " Prix total de la réservation :";os<<reservation.prix()<<std::endl;
+    //os<< "--------------------------------------------------------Fin--------------------------------------------------------"<<std::endl;
     return os;
     }
 

@@ -5,32 +5,32 @@
 #include "clients.h"
 #include "hotel.h"
 namespace reservation{
-class Reservation {
+class Reservation /*: public hotel*/{
 public:
-   Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,clients::Clients client);
+   Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,clients::Clients client,int prix);
    date::Date Ddate() const;
    int nightNbr() const;
-   std::string type() const;
+   //std::string type() const;
    clients::Clients client() const;
    hotel::Hotel hotel() const;
-
+   int prix()const;
    void updateDdate(date::Date Ddate);
    void updatenightNbr(int nightNbr);
    void updateType(std::string type);
    void updateHotel(hotel::Hotel hotel);
    void updateClient(clients::Clients client);
-   void updatePrixTot(int nightNbr);
+   void updatePrix(int prix);
+   
 private:
    date::Date _Ddate;
    int _nightNbr;
-   std::string _type;
    hotel::Hotel _hotel;
+   std::string _type;
    clients::Clients _client;
-   double _prixTot;
+   int _prix;
    
 };
 
-double CalculPrix(int nightNbr);
 std::ostream& operator<<(std::ostream& os, const Reservation& reservation);
 bool operator == (const Reservation& r1,const Reservation& r2);
 #endif

@@ -1,70 +1,86 @@
 #include "reservation.h"
-#include "hotel.h"
 #include <iostream>
-#include <algorithm>
+//#include <algorithm>
 void SaisieReserv (std::vector<clients::Clients>& tab,std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
-    
-    std::string nom, prenon, idClient;
-    std::cout<< " Enter Customer firstname : " ;
-    std::cin>> prenon;
-    std::cout<< " Enter Customer lastname : " ;
-    std::cin>> nom;
-    std::cout<< " Enter Customer ID : " ;
-    std::cin>> idClient;
-    clients::Clients client(prenon, nom, idClient);
-    if(std::find(tab.begin(),tab.end(),client)!=tab.end())
-    {
-      std::cout<< " Client déja saisie "<<std::endl;
-    }else{
-      std::cout<< " Le client a été saisie "<<std::endl;
-      tab.push_back(client);
-    }
-    std::cout << std::endl;
-    
 
-    int jour, mois, annee, nightnbr, choix=0;
-    std::string type, idhotel;
-    std::cout<< " Enter Reservation day : " ;
-    std::cin>> jour;
-    std::cout<< " Enter Reservation month : " ;
-    std::cin>> mois;
-    std::cout<< " Enter Reservation year : " ;
-    std::cin>> annee;
-    date::Date date1(1,1,1);
-    date1.updateMonth(mois);
-    date1.updateDay(jour);
-    date1.updateYear(annee);
-    std::cout<< " Enter night number : " ;
+  std::string nom, prenon, idClient,type, idhotel;
+  
+  std::cout<< " Enter Customer firstname : " ;
+  std::cin>> prenon;
+  std::cout<< " Enter Customer lastname : " ;
+  std::cin>> nom;
+  std::cout<< " Enter Customer ID : " ;
+  std::cin>> idClient;
+  clients::Clients client(prenon, nom, idClient);
+  if(std::find(tab.begin(),tab.end(),client)!=tab.end())
+  {
+    std::cout<< " Client déja saisie !!!"<<std::endl;
+  }else{
+    std::cout<< " Le client a été saisie !"<<std::endl;
+    tab.push_back(client);
+  }
+  std::cout << std::endl;
+
+
+  int day, month, year, nightnbr, choix=0;
+  do{
+  std::cout<< " Enter Reservation day : " ;
+  std::cin>> day;
+  std::cout<< " Enter Reservation month : " ;
+  std::cin>> month;
+  std::cout<< " Enter Reservation year : " ;
+  std::cin>> year;
+  if(date::isDate(month,day,year)==false){std::cout<<"The date is invalid !!!"<<std::endl;}
+  }while(date::isDate(month,day,year)==false);
+  date::Date date(month,day,year);
+
+  std::cout<< " Enter night number : " ;
+  std::cin>> nightnbr;
+  if(nightnbr>1){
+  }else{
+    std::cout<< " The night number is invalid !!!" ;
     std::cin>> nightnbr;
-    if(nightnbr>1){
-    }else{
-      std::cout<< " Night number invalid : " ;
-      std::cin>> nightnbr;
-    }
-    
-    std::cout<< " Enter your room type : " ;
-    std::cout<< " Press 1 for : single, 2 for double and 3 for suite" <<std::endl;
-    std::cin>>choix;
-    switch (choix) {
+  }
+  
+  std::cout<< " Enter your room type : " ;
+  std::cout<< " Press 1 for : single, 2 for double and 3 for suite" <<std::endl;
+  std::cin>>choix;
+  switch (choix) {
     case 1: type= "single";break;
     case 2: type= "double";break;
     case 3: type= "suite";break;
-    }
-    std::cout << " You choose the "<<type<< " type"<<std::endl;
+  }
+  std::cout << " You choose the "<<type<< " type"<<std::endl;
+  int prix=nightnbr*hotel.displayPrice(type);                    // calcul du prix
+  if(hotel.chambreAvailable(type))                               // test de validité de la chambre
+  {
+    for(auto it=res.begin(); it!=res.end();it++){
+     reservation::Reservation reservationTest=*it;
+     if(reservationTest.type()==type){
 
-    reservation::Reservation reservation1(date1,nightnbr,hotel,type,client);
-    if(std::find(res.begin(),res.end(),reservation1)!=res.end())
+     } 
+   }*/
+
+   reservation::Reservation reservation1(date,nightnbr,hotel,type,client,prix);
+    if(std::find(res.begin(),res.end(),reservation1)!=res.end()) // Recherche de doublon
     {
-      std::cout<< " Reservation déja saisie "<<std::endl;
-    }else{
-      std::cout<< " La reservation a été saisie "<<std::endl;
+      std::cout<< " Reservation déja saisie !!! "<<std::endl;
+    }
+    else
+    {
+      std::cout<< " La reservation a été saisie !"<<std::endl;
       res.push_back(reservation1);
     }
-    std::cout << std::endl;
 
+  }else{
+    std::cout<< "Chambre non disponiple"<<std::endl;
+  }
+
+  std::cout << std::endl;
 }
+
   
-  std::ostream& operator<<(std::ostream& os, const std::vector<clients::Clients>& vect) {
+std::ostream& operator<<(std::ostream& os, const std::vector<clients::Clients>& vect) {
   os << "Client :"<<std::endl;
   os << " ";
   for (auto number : vect)
@@ -73,11 +89,14 @@ void SaisieReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
   return os;
 }
 std::ostream& operator<<(std::ostream& os, const std::vector<reservation::Reservation>& reser) {
-  os << "Reservation :"<<std::endl;
-  os << " ";
-  for (auto number : reser)
-    os << number << " ";
-  os << std::endl;
+  int i=1;
+  os<< "----------------------------------------------------Reservation----------------------------------------------------"<<std::endl;
+  for (auto number : reser){
+    os<< "Reservation numero "<<i<<":"<<std::endl;
+    os << number << " "<< std::endl;
+    i++;
+  }
+  os<< "--------------------------------------------------------Fin--------------------------------------------------------"<<std::endl;
   return os;
 }
 
@@ -119,10 +138,11 @@ int main(int argc, char const *argv[]) {
   tabClient.push_back(client12);
   tabClient.push_back(client13);
   std::cout<<tabClient;
+  while(1){
   SaisieReserv(tabClient,Reserv,hotel1);
-  std::cout<<tabClient;
+  
   std::cout<<Reserv;
-
+}
   
   return 0;
 
