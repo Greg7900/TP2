@@ -7,25 +7,28 @@
 namespace reservation{
 class Reservation /*: public hotel*/{
 public:
-   Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,clients::Clients client,int prix);
+   Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,int roomNumber,clients::Clients client,int prix);
    date::Date Ddate() const;
    int nightNbr() const;
-   //std::string type() const;
+   int roomNumber() const;
+   std::string type() const;
    clients::Clients client() const;
    hotel::Hotel hotel() const;
    int prix()const;
    void updateDdate(date::Date Ddate);
-   void updatenightNbr(int nightNbr);
+   void updateNightNbr(int nightNbr);
    void updateType(std::string type);
    void updateHotel(hotel::Hotel hotel);
    void updateClient(clients::Clients client);
    void updatePrix(int prix);
+   void updateRoonumber(int roomNumber);
    
 private:
    date::Date _Ddate;
    int _nightNbr;
    hotel::Hotel _hotel;
    std::string _type;
+   int _roomNumber;
    clients::Clients _client;
    int _prix;
    

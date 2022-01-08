@@ -24,14 +24,16 @@ void SaisieReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
 
   int day, month, year, nightnbr, choix=0;
   do{
-  std::cout<< " Enter Reservation day : " ;
-  std::cin>> day;
-  std::cout<< " Enter Reservation month : " ;
-  std::cin>> month;
-  std::cout<< " Enter Reservation year : " ;
-  std::cin>> year;
-  if(date::isDate(month,day,year)==false){std::cout<<"The date is invalid !!!"<<std::endl;}
-  }while(date::isDate(month,day,year)==false);
+    std::cout<< " Enter Reservation day : " ;
+    std::cin>> day;
+    std::cout<< " Enter Reservation month : " ;
+    std::cin>> month;
+    std::cout<< " Enter Reservation year : " ;
+    std::cin>> year;
+    if(date::isDate(month,day,year)==false)
+      {std::cout<<" The date is invalid !!!"<<std::endl;
+      }
+}while(date::isDate(month,day,year)==false);
   date::Date date(month,day,year);
 
   std::cout<< " Enter night number : " ;
@@ -51,32 +53,41 @@ void SaisieReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
     case 3: type= "suite";break;
   }
   std::cout << " You choose the "<<type<< " type"<<std::endl;
-  int prix=nightnbr*hotel.displayPrice(type);                    // calcul du prix
-  if(hotel.chambreAvailable(type))                               // test de validité de la chambre
-  {
-    for(auto it=res.begin(); it!=res.end();it++){
-     reservation::Reservation reservationTest=*it;
-     if(reservationTest.type()==type){
+  int prix=nightnbr*hotel.displayPrice(type), roomNumber=0;                    // calcul du prix
+  
+    if(hotel.chambreAvailable(type))                               // test de validité de la chambre
+    { 
+      roomNumber=hotel.chambreSelect(type);
+      std::cout<<roomNumber;
+      reservation::Reservation reservation1(date,nightnbr,hotel,type,roomNumber,client,prix);
+      if(res.size()==0){
+        res.push_back(reservation1);
+        std::cout<< " La reservation a été saisie !"<<std::endl;
+      }else{
 
-     } 
-   }*/
 
-   reservation::Reservation reservation1(date,nightnbr,hotel,type,client,prix);
-    if(std::find(res.begin(),res.end(),reservation1)!=res.end()) // Recherche de doublon
-    {
-      std::cout<< " Reservation déja saisie !!! "<<std::endl;
-    }
-    else
-    {
-      std::cout<< " La reservation a été saisie !"<<std::endl;
-      res.push_back(reservation1);
-    }
+        for(auto it=res.begin();it!=res.end();it++){
+         reservation::Reservation reservationTest=*it;
+         if(reservation1.roomNumber()==4/*reservationTest.roomNumber()*/){
+            if( (reservationTest.nightNbr()+reservationTest.Ddate() )< (reservation1.Ddate()) ){
+            std::cout<< " Reservation déja saisie !!! "<<std::endl;
+            }else{
+            std::cout<< " La reservation a été saisie !"<<std::endl;
+            res.push_back(reservation1);
+          }
+          }else{
+            res.push_back(reservation1);
+          }
 
-  }else{
-    std::cout<< "Chambre non disponiple"<<std::endl;
-  }
+      
+        }
+      }
 
-  std::cout << std::endl;
+   }else{
+      std::cout<< "Chambre non disponiple"<<std::endl;
+   }
+
+std::cout << std::endl;
 }
 
   
