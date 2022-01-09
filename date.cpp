@@ -11,7 +11,7 @@
 
 namespace date {
 Date::Date(int month, int day, int year) : _month(month), _day(day), _year(year) {
-    bool status = isDate(month, day, year);
+    //bool status = isDate(month, day, year);
     //assert(status && "Date is not valid");
 }
 
