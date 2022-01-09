@@ -44,7 +44,7 @@ namespace hotel {
       }
       return 0;
    }
-   int Hotel::chambreSelect(std::string type){
+      int Hotel::chambreSelect(std::string type){
       int numero=32767;
       auto it_save= _Chambre.begin();
       chambre::Chambre chambre_save=*it_save;
@@ -65,6 +65,7 @@ namespace hotel {
       *it_save=chambre_save;
       return numero;
    }
+
    
    void Hotel::updateIdUnique(std::string idUnique){
    	_idUnique=idUnique;

@@ -29,10 +29,17 @@ int main(int argc, char const *argv[]) {
   hotel1.updateNbChambre(chambre10);
   std::cout << hotel1 << std::endl;
   clients::Clients client1 ("Jean","michel","AZERTY");
-  int prix=3*hotel1.displayPrice("single");
-  reservation::Reservation reservation1(date1,3,hotel1,"single",client1,prix);
+  reservation::Reservation reservation1(date1,3,hotel1,"single",217,client1);
   std::cout << reservation1 << std::endl;
-  reservation1.updateType("double");
+  
+
+
+ /* std::cout<<" Numero de chambre : "<<reservation1.chambreSelect("double")<<std::endl;
+  std::cout << reservation1 << std::endl;
+  std::cout<<" Numero de chambre : "<<reservation1.chambreSelect("suite")<<std::endl;
+  std::cout << reservation1 << std::endl;
+  std::cout<<" Numero de chambre : "<<reservation1.chambreSelect("double")<<std::endl;
+  std::cout << reservation1 << std::endl;*/
   
  
   return 0;

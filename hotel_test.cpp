@@ -39,11 +39,11 @@ int main(int argc, char const *argv[]) {
   
   if(hotel1.chambreAvailable("suite")){std::cout<< "chambre du type disponible"<<std::endl;}
   //afficheReduite(hotel1);
-  std::cout<<" Numero de chambre : "<<hotel1.chambreSelect("double")<<std::endl;
+  std::cout<<hotel1.chambreSelect("double")<<std::endl;
   std::cout << hotel1 << std::endl;
-  std::cout<<" Numero de chambre : "<<hotel1.chambreSelect("suite")<<std::endl;
+  std::cout<<hotel1.chambreSelect("suite")<<std::endl;
   std::cout << hotel1 << std::endl;
-  std::cout<<" Numero de chambre : "<<hotel1.chambreSelect("double")<<std::endl;
+  std::cout<<hotel1.chambreSelect("double")<<std::endl;
   std::cout << hotel1 << std::endl;
 
 
