@@ -21,85 +21,11 @@ std::ostream& operator<<(std::ostream& os, const std::vector<reservation::Reserv
   os<< "--------------------------------------------------------Fin--------------------------------------------------------"<<std::endl;
   return os;
 }
-void displayReserv (reservation::Reservation& res, int choix){
-        std::cout << std::endl;
-        if(choix==1){
-        std::cout << "\033[2J\033[1;1H"; //clear terminal//clear terminal
-        std::cout<< "---------------------------------------------Reservation saisie---------------------------------------------"<<std::endl;
-        std::cout<<res;
-        std::cout<< "------------------------------------------------------------------------------------------------------------"<<std::endl;
-      }else if(choix==2){
-        std::cout<<res;
-      }
-}
-int roomselect (std::string type,std::vector<reservation::Reservation>& res,hotel::Hotel& hotel){
-
-  int numero=32767;
-  
-
-    for(auto it=hotel.chambre().begin(); it!=hotel.chambre().end();it++){
-       chambre::Chambre chambre1=*it;
-       
-      for(auto it1=res.begin();it1!=res.end();it1++){
-      reservation::Reservation reservationTest=*it1;
-   
-       if(chambre1.type()==type){
-          if((chambre1.numero()<numero)&&(reservationTest.roomNumber()!=chambre1.numero())){
-             numero=chambre1.numero();    
-          }
-       }
-      }
-    }
-
-    std::cout << hotel<< std::endl;
-    
-  
-return numero;
-}
-
-void searchReserv (std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
-        std::string idClient;
-        int flag=0;
-        std::cout<< " Enter Customer ID : " ;
-        std::cin>> idClient;
-        for(auto it=res.begin();it!=res.end();it++){
-         reservation::Reservation reservationTest=*it;
-         if(reservationTest.client().GetID()==idClient){
-          displayReserv(reservationTest,1);
-          flag=1;
-        }
-        if(flag==0){std::cout<< " Reservation not found";}
-      }
-      
-}
- void custumerReserv(std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
-      std::cout << "\033[2J\033[1;1H"; //clear terminal
-      int flag=0;
-      std::string idClient;
-      std::cout<< " Enter Customer ID or name : " ;
-      std::cin>> idClient;
-      std::cout<< "---------------------------------------------Reservation saisie---------------------------------------------"<<std::endl;
-      for(auto it=res.begin();it!=res.end();it++){
-         reservation::Reservation reservationTest=*it;
-         if(reservationTest.client().GetID()==idClient){
-          displayReserv(reservationTest,2); // 2 pour pouvoir afficher plusieurs reservation si choix = 1  un clear du terminal s'executera et un ne pourra voir que la derniere reservation
-          flag=1;
-         }else if(reservationTest.client().Getlastname()==idClient){
-          displayReserv(reservationTest,2); // 2 pour pouvoir afficher plusieurs reservation 
-          flag=1;
-         }
-      }
-      if(flag==0){std::cout<< " Reservation not found";}
-      std::cout<< "------------------------------------------------------------------------------------------------------------"<<std::endl;
-      
-
- }
 
 clients::Clients custumerInformation (void){
   
   std::string nom, prenon, idClient;
   std::cout << std::endl;
-  std::cout<< "---------------------------------------------Enter a Reservation----------------------------------------------"<<std::endl;
   std::cout<< " Enter Customer firstname : " ;
   std::cin>> prenon;
   std::cout<< " Enter Customer lastname : " ;
@@ -124,15 +50,89 @@ date::Date reservDate (void){
     if(date::isDate(month,day,year)==false)
       {std::cout<<" The date is invalid !!!"<<std::endl;
       }
-}while(date::isDate(month,day,year)==false);
-  date::Date date(month,day,year);
-  return date;
+   }while(date::isDate(month,day,year)==false);
+   date::Date date(month,day,year);
+   return date;
 }
+
+void displayReserv (reservation::Reservation& res, int choix){
+        std::cout << std::endl;
+        if(choix==1){
+        std::cout << "\033[2J\033[1;1H"; //clear terminal//clear terminal
+        std::cout<< "---------------------------------------------Reservation saisie---------------------------------------------"<<std::endl;
+        std::cout<<res;
+        std::cout<< "------------------------------------------------------------------------------------------------------------"<<std::endl;
+      }else if(choix==2){
+        std::cout<<res;
+      }
+}
+
+int roomselect (std::string type,std::vector<reservation::Reservation>& res,hotel::Hotel& hotel){
+
+  int numero=32767;
+  
+
+    for(auto it=hotel.chambre().begin(); it!=hotel.chambre().end();it++){
+       chambre::Chambre chambre1=*it;
+       
+      for(auto it1=res.begin();it1!=res.end();it1++){
+      reservation::Reservation reservationTest=*it1;
+   
+       if(chambre1.type()==type){
+          if((chambre1.numero()<numero)&&(reservationTest.roomNumber()!=chambre1.numero())){
+             numero=chambre1.numero();    
+          }
+       }
+      }
+    }
+
+    std::cout << hotel<< std::endl;
+  return numero;
+}
+
+void searchReserv (std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
+        std::string idClient;
+        int flag=0;
+        std::cout<< " Enter Customer ID : " ;
+        std::cin>> idClient;
+        for(auto it=res.begin();it!=res.end();it++){
+         reservation::Reservation reservationTest=*it;
+         if(reservationTest.client().GetID()==idClient){
+          displayReserv(reservationTest,1);
+          flag=1;
+        }
+        if(flag==0){std::cout<< " Reservation not found";}
+      }
+}
+
+void custumerReserv(std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
+      std::cout << "\033[2J\033[1;1H"; //clear terminal
+      int flag=0;
+      std::string idClient;
+      std::cout<< " Enter Customer ID or name : " ;
+      std::cin>> idClient;
+      std::cout<< "---------------------------------------------Reservation saisie---------------------------------------------"<<std::endl;
+      for(auto it=res.begin();it!=res.end();it++){
+         reservation::Reservation reservationTest=*it;
+         if(reservationTest.client().GetID()==idClient){
+          displayReserv(reservationTest,2); // 2 pour pouvoir afficher plusieurs reservation si choix = 1  un clear du terminal s'executera et un ne pourra voir que la derniere reservation
+          flag=1;
+         }else if(reservationTest.client().Getlastname()==idClient){
+          displayReserv(reservationTest,2); // 2 pour pouvoir afficher plusieurs reservation 
+          flag=1;
+         }
+      }
+      if(flag==0){std::cout<< " Reservation not found";}
+      std::cout<< "------------------------------------------------------------------------------------------------------------"<<std::endl;
+}
+
+
 
 
 void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
   std::cout << "\033[2J\033[1;1H"; //clear terminal
   std::string type, idhotel;
+  std::cout<< "---------------------------------------------Enter a Reservation----------------------------------------------"<<std::endl;
   clients::Clients client=custumerInformation();
   if(std::find(tab.begin(),tab.end(),client)!=tab.end())
   {
@@ -142,7 +142,7 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
     tab.push_back(client);
   }
   std::cout << std::endl;
-
+  std::cout<< " enter the date of the reservation : " ; 
   date::Date date=reservDate();
 
 
@@ -213,71 +213,100 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
 }
 void modifyReserv (std::vector<reservation::Reservation>& res){
     std::cout << "\033[2J\033[1;1H"; //clear terminal
-    int choix,flag;
+    std::cout<< "---------------------------------------------Modify Reservation----------------------------------------------"<<std::endl;
+    int choix,flag=0;
     std::string ID;
-    std::cout<< " Enter an action ! " <<std::endl<<" Modify date : 1"<<std::endl<<" Modify night number : 2 "<<std::endl<<" Modify client information : 3 "<<std::endl<<" Modify chamber type : 4 ";
+    std::cout<< " Enter an action ! " <<std::endl<<" Modify date : 1"<<std::endl<<" Modify night number : 2 "<<std::endl<<" Modify client information : 3 "<<std::endl<<" Modify chamber type : 4 "<<std::endl;
     std::cin>>choix;
     std::cout<< " You have chosen the number "<<choix<<std::endl;
     
-    std::cout<< " Enter Customer ID : " ;
-    std::cin>>ID;
-    
+    std::cout<< " Enter your Customer ID : " ;
+    std::cin>>ID;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
+    std::cout<< " enter the date of the initial reservation : " <<std::endl;
     date::Date date1=reservDate(); 
 
-    auto it_save=res.begin();  // Pour trouver la reservation à modifier pour rapport au nom et a la date de reserv initial
-    reservation::Reservation reservationSauv=*it_save;
-
-    for(auto it=res.begin();it!=res.end();it++){
-      reservation::Reservation reservationTest=*it;
-      if( (reservationTest.client().GetID()==ID)&& (reservationTest.Ddate()==date1) ){
-            
-               
-               it_save=it;
-               reservationSauv=*it_save;
-            
-         }
-         *it_save=reservationSauv;
-    }
     switch (choix){
       case 1 :
       {
-        date::Date date=reservDate();
-        reservationSauv.updateDdate(date);
-        std::cout<<res;
-      }
-      
-      
-      break;
+        for(auto it=res.begin();it!=res.end();it++){
+          reservation::Reservation reservationTest=*it;
+          if( ((reservationTest.client()).GetID()==ID)&& (reservationTest.Ddate()==date1) ){
+            date::Date date=reservDate();
+            (*it).updateDdate(date);
+            std::cout<<(*it);
+            flag=1;
+          }
+        }
+        if(flag==0){std::cout<< " Reservation not found"<<std::endl;}
+      }break;
+
       case 2 :
       {
         int nightnumber;
-        std::cout<<" Enter the new night number : "<<std::endl;
+        std::cout<<" Enter the new night number : ";
         std::cin>>nightnumber;
-        reservationSauv.updateNightNbr(nightnumber);
-        std::cout<<res;
+        for(auto it=res.begin();it!=res.end();it++){
+        reservation::Reservation reservationTest=*it; 
+          if( ((reservationTest.client()).GetID()==ID)&& (reservationTest.Ddate()==date1) ){
+            std::cout<<" test";
+            (*it).updateNightNbr(nightnumber);
+            std::cout<<(*it);
+            flag=1;
+          }
+        }
+        if(flag==0){std::cout<< " Reservation not found"<<std::endl;}
       }
       break;
       case 3 :
       {
         clients::Clients client=custumerInformation();
-        reservationSauv.updateClient(client);
-        std::cout<<res;
+        for(auto it=res.begin();it!=res.end();it++){
+          reservation::Reservation reservationTest=*it;
+          if( ((reservationTest.client()).GetID()==ID)&& (reservationTest.Ddate()==date1) ){
+            std::cout<<" test";
+            (*it).updateClient(client);
+            std::cout<<(*it);
+            flag=1;
+          }
+        }if(flag==0){std::cout<< " Reservation not found"<<std::endl;}
       }
       break;
       case 4 :
       {
         std::string type;
-        std::cout<<" Enter the new chamber type : "<<std::endl;
+        std::cout<<" Enter the new chamber type : ";
         std::cin>>type;
-        reservationSauv.updateType(type);
-        std::cout<<res;
+        for(auto it=res.begin();it!=res.end();it++){
+          reservation::Reservation reservationTest=*it;
+          if( ((reservationTest.client()).GetID()==ID)&& (reservationTest.Ddate()==date1) ){
+            std::cout<<" test";
+            (*it).updateType(type);
+            std::cout<<(*it);
+            flag=1;
+          }
+        }if(flag==0){std::cout<< " Reservation not found"<<std::endl;}
       }
       break;
-
     }
 }
 
-
+void deleteReserv (std::vector<reservation::Reservation>& res){
+  std::cout << "\033[2J\033[1;1H"; //clear terminal
+  int flag=0;
+  std::cout<< "---------------------------------------------Delete Reservation----------------------------------------------"<<std::endl;
+  std::cout<< " Enter your Customer ID : " ;
+  std::string ID;
+  std::cin>>ID;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
+  std::cout<< " enter the date of the initial reservation : "<<std::endl;  
+    date::Date date1=reservDate();
+    for(auto it=res.begin();it!=res.end();it++){
+          reservation::Reservation reservationTest=*it;
+          if( ((reservationTest.client()).GetID()==ID)&& (reservationTest.Ddate()==date1) ){
+          res.erase(it);
+          flag=1;
+          }
+        }if(flag==0){std::cout<< " Reservation not found"<<std::endl;}
+}
   
 
 
@@ -327,11 +356,12 @@ int main(int argc, char const *argv[]) {
   date::Date datee1(4,4,4); //mois day
   reservation::Reservation reservation11(datee1,3,hotel1,"single",207,client114,6);
   Reserv.push_back(reservation11);
-  std::cout<<tabClient;
+  //std::cout<<tabClient;
   while(1){
     int choix;
+    std::cout<< "---------------------------------------------Menu---------------------------------------------"<<std::endl<<std::endl;
     std::cout<< " Enter an action ! " <<std::endl<<" Enter a reservation : 1"<<std::endl<<" Display a specific reservation : 2 "<<std::endl<<" View a customer's reservations : 3 "<<std::endl;
-    std::cout<<" Modify a reservations : 4 "<<std::endl;
+    std::cout<<" Modify a reservations : 4 "<<std::endl<<" Delete a reservations : 5 "<<std::endl<<std::endl;
     std::cin>>choix;
     std::cout<< " You have chosen the number "<<choix<<std::endl;
     switch (choix){
@@ -346,6 +376,9 @@ int main(int argc, char const *argv[]) {
       break;
       case 4 :
       modifyReserv(Reserv);
+      break;
+      case 5 :
+      deleteReserv(Reserv);
       break;
 
     }
