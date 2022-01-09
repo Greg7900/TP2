@@ -116,7 +116,7 @@ date::Date reservDate (void){
   do{
    
     std::cout<< " Enter Reservation day : " ;
-    std::cin>> day; if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
+    std::cin>> day; if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  } // pour eviter les boucles infinies causés par le cin lors d'une saisie autre que string
     std::cout<< " Enter Reservation month : " ;
     std::cin>> month;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
     std::cout<< " Enter Reservation year : " ;
@@ -221,7 +221,9 @@ void modifyReserv (std::vector<reservation::Reservation>& res){
     
     std::cout<< " Enter Customer ID : " ;
     std::cin>>ID;
-    date::Date date1=reservDate();
+    
+    date::Date date1=reservDate(); 
+
     auto it_save=res.begin();  // Pour trouver la reservation à modifier pour rapport au nom et a la date de reserv initial
     reservation::Reservation reservationSauv=*it_save;
 
@@ -241,6 +243,7 @@ void modifyReserv (std::vector<reservation::Reservation>& res){
       {
         date::Date date=reservDate();
         reservationSauv.updateDdate(date);
+        std::cout<<res;
       }
       
       
@@ -251,12 +254,14 @@ void modifyReserv (std::vector<reservation::Reservation>& res){
         std::cout<<" Enter the new night number : "<<std::endl;
         std::cin>>nightnumber;
         reservationSauv.updateNightNbr(nightnumber);
+        std::cout<<res;
       }
       break;
       case 3 :
       {
         clients::Clients client=custumerInformation();
         reservationSauv.updateClient(client);
+        std::cout<<res;
       }
       break;
       case 4 :
@@ -265,6 +270,7 @@ void modifyReserv (std::vector<reservation::Reservation>& res){
         std::cout<<" Enter the new chamber type : "<<std::endl;
         std::cin>>type;
         reservationSauv.updateType(type);
+        std::cout<<res;
       }
       break;
 
@@ -317,6 +323,10 @@ int main(int argc, char const *argv[]) {
   date::Date datee(4,02,2022); //mois day
   reservation::Reservation reservation1(datee,3,hotel1,"single",217,client1,5);
   Reserv.push_back(reservation1);
+  clients::Clients client114 ("test","test1","az");
+  date::Date datee1(4,4,4); //mois day
+  reservation::Reservation reservation11(datee1,3,hotel1,"single",207,client114,6);
+  Reserv.push_back(reservation11);
   std::cout<<tabClient;
   while(1){
     int choix;
