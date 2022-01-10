@@ -55,7 +55,7 @@ date::Date reservDate (void){
    return date;
 }
 
-void displayReserv (reservation::Reservation& res, int choix){
+void displayReserv (const reservation::Reservation& res, int choix){
         std::cout << std::endl;
         if(choix==1){
         std::cout << "\033[2J\033[1;1H"; //clear terminal//clear terminal
@@ -90,14 +90,14 @@ int roomselect (std::string type,std::vector<reservation::Reservation>& res,hote
   return numero;
 }
 
-void searchReserv (std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
-        std::string idClient;
+void searchReserv (const std::vector<reservation::Reservation>& res, const hotel::Hotel& hotel){
+        int idRes;
         int flag=0;
-        std::cout<< " Enter Customer ID : " ;
-        std::cin>> idClient;
+        std::cout<< " Enter Reservation ID : " ;
+        std::cin>> idRes;
         for(auto it=res.begin();it!=res.end();it++){
          reservation::Reservation reservationTest=*it;
-         if(reservationTest.client().GetID()==idClient){
+         if(reservationTest.idReserv()==idRes){
           displayReserv(reservationTest,1);
           flag=1;
         }
@@ -105,7 +105,7 @@ void searchReserv (std::vector<reservation::Reservation>& res, hotel::Hotel& hot
       }
 }
 
-void custumerReserv(std::vector<reservation::Reservation>& res, hotel::Hotel& hotel){
+void custumerReserv(const std::vector<reservation::Reservation>& res , const hotel::Hotel& hotel){
       std::cout << "\033[2J\033[1;1H"; //clear terminal
       int flag=0;
       std::string idClient;
@@ -174,11 +174,13 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
   
    if(hotel.chambreAvailable(type))                               // test de validité de la chambre
     { 
-      int idReserv=res.size()+1;
+     
+      int idReserv=(res.back()).idReserv()+1; // calcul de l'id de reservation par rapport a la derniere reservation pour éviter les doublon en cas de suppression d'une reservation
       int roomNumber=roomselect(type,res,hotel);
       reservation::Reservation reservation1(date,nightnbr,hotel,type,roomNumber, client,idReserv);
       
-      if(res.size()>=0){
+      if(res.size()>=0){ // si aucune reservation n'existe
+
         res.push_back(reservation1);
         displayReserv(reservation1,1);
         
@@ -190,9 +192,9 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
          if(reservation1.roomNumber()==reservationTest.roomNumber()){
 
             if( (reservationTest.nightNbr()+reservationTest.Ddate() )< (reservation1.Ddate()) ){
-            std::cout<< " The reservation already entered !!! "<<std::endl;
-            }else{
             std::cout<< " The reservation has been entered !"<<std::endl;
+            }else{
+            std::cout<< " Chamber Unavailable for this date!"<<std::endl;
             res.push_back(reservation1);
             displayReserv(reservation1,1);
           }
@@ -299,13 +301,22 @@ void deleteReserv (std::vector<reservation::Reservation>& res){
   std::cin>>ID;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
   std::cout<< " enter the date of the initial reservation : "<<std::endl;  
     date::Date date1=reservDate();
-    for(auto it=res.begin();it!=res.end();it++){
+   /* for(auto it=res.begin();it!=res.end();it++){
           reservation::Reservation reservationTest=*it;
           if( ((reservationTest.client()).GetID()==ID)&& (reservationTest.Ddate()==date1) ){
+        
           res.erase(it);
+
           flag=1;
           }
-        }if(flag==0){std::cout<< " Reservation not found"<<std::endl;}
+        }if(flag==0){std::cout<< " Reservation not found"<<std::endl;}*/
+    auto it=std::find_if(res.begin(),res.end(),[ID](const reservation::Reservation& rese) {std::cout<<" ggg";auto it2=(rese.client()).GetID();});
+    if(it2 != res.end()){
+      std::cout<<" testttttt";
+    }
+    
+          std::cout<<" aaaaa";
+
 }
   
 
@@ -360,8 +371,10 @@ int main(int argc, char const *argv[]) {
   while(1){
     int choix;
     std::cout<< "---------------------------------------------Menu---------------------------------------------"<<std::endl<<std::endl;
-    std::cout<< " Enter an action ! " <<std::endl<<" Enter a reservation : 1"<<std::endl<<" Display a specific reservation : 2 "<<std::endl<<" View a customer's reservations : 3 "<<std::endl;
-    std::cout<<" Modify a reservations : 4 "<<std::endl<<" Delete a reservations : 5 "<<std::endl<<std::endl;
+    std::cout<< " Enter an action ! " <<std::endl<<" Enter a reservation : 1"<<std::endl<<" Display reservation by its reservation ID: 2 "<<std::endl<<" Display Client's reservation by his/her name or client id : 3 "<<std::endl;
+    std::cout<< " Display all reservation : 4"<<std::endl;
+    std::cout<<" Modify a reservations : 5 "<<std::endl<<" Delete a reservations : 6 "<<std::endl<<std::endl;
+
     std::cin>>choix;
     std::cout<< " You have chosen the number "<<choix<<std::endl;
     switch (choix){
@@ -375,9 +388,12 @@ int main(int argc, char const *argv[]) {
       custumerReserv(Reserv,hotel1);
       break;
       case 4 :
-      modifyReserv(Reserv);
+      std::cout<<Reserv;
       break;
       case 5 :
+      modifyReserv(Reserv);
+      break;
+      case 6 :
       deleteReserv(Reserv);
       break;
 
