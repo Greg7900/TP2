@@ -14,12 +14,12 @@ public:
    std::string ville() const;
    std::vector<chambre::Chambre> chambre() const;
    int NbChambre() const;
-   //double prixChambre() const;
    void displayChambre()const;
    void updateIdUnique(std::string idUnique);
    void updateNom(std::string nom);
    void updateVille(std::string ville);
-   void updateNbChambre(chambre::Chambre nbChambre);
+   void ajouterChambre(chambre::Chambre Chambre);
+   void delChambre(chambre::Chambre Chambre);
    bool chambreAvailable(std::string type);
    void setReserved(int roomState,int numChambre);
    int displayPrice(std::string type) ;

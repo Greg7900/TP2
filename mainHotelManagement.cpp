@@ -74,16 +74,24 @@ int roomselect (std::string type,std::vector<reservation::Reservation>& res,hote
 
     for(auto it=hotel.chambre().begin(); it!=hotel.chambre().end();it++){
        chambre::Chambre chambre1=*it;
-       
+       bool reservee=false;
+      
       for(auto it1=res.begin();it1!=res.end();it1++){
-      reservation::Reservation reservationTest=*it1;
+        reservation::Reservation reservationTest=*it1;
    
-       if(chambre1.type()==type){
-          if((chambre1.numero()<numero)&&(reservationTest.roomNumber()!=chambre1.numero())){
-             numero=chambre1.numero();    
+        if(chambre1.type()==type){
+          if(reservationTest.roomNumber()== (chambre1.numero()) ) {
+            reservee = true;
+          }
+        }
+      }
+       if ((reservee==false)&&(chambre1.type()==type))
+       {
+          if (numero > chambre1.numero())
+          {
+            numero = chambre1.numero();
           }
        }
-      }
     }
 
     std::cout << hotel<< std::endl;
@@ -96,9 +104,7 @@ void searchReserv (const std::vector<reservation::Reservation>& res, const hotel
         int idRes;
         int flag=0;
         std::cout<< " Enter Reservation ID : " ;
-        do{
         std::cin>> idRes; if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
-      }while()
       auto it=std::find_if(res.begin(),res.end(),[idRes](const reservation::Reservation& rese) {return idRes==(rese.idReserv());});
       if(it != res.end()){
         displayReserv(*it,1);
@@ -333,16 +339,18 @@ int main(int argc, char const *argv[]) {
   chambre::Chambre chambre10(210,10,"suite");
 
  
-  hotel1.updateNbChambre(chambre1);
-  hotel1.updateNbChambre(chambre2);
-  hotel1.updateNbChambre(chambre3);
-  hotel1.updateNbChambre(chambre4);
-  hotel1.updateNbChambre(chambre5);
-  hotel1.updateNbChambre(chambre6);
-  hotel1.updateNbChambre(chambre7);
-  hotel1.updateNbChambre(chambre8);
-  hotel1.updateNbChambre(chambre9);
-  hotel1.updateNbChambre(chambre10);
+  hotel1.ajouterChambre(chambre1);
+  hotel1.ajouterChambre(chambre2);
+  hotel1.ajouterChambre(chambre3);
+  hotel1.ajouterChambre(chambre4);
+  hotel1.ajouterChambre(chambre5);
+  hotel1.ajouterChambre(chambre6);
+  hotel1.ajouterChambre(chambre7);
+  hotel1.ajouterChambre(chambre8);
+  hotel1.ajouterChambre(chambre9);
+  hotel1.ajouterChambre(chambre10);
+
+//  hotel1.delChambre(chambre10);
   std::cout<< "---------------------------------------------Info Hotel---------------------------------------------"<<std::endl<<std::endl;
   std::cout << hotel1 << std::endl;
   std::cout<< "----------------------------------------------------------------------------------------------------"<<std::endl;
@@ -355,11 +363,11 @@ int main(int argc, char const *argv[]) {
   tabClient.push_back(client13);
   clients::Clients client1 ("Jean","michel","AZERTY");
   date::Date datee(4,02,2022); //mois day
-  reservation::Reservation reservation1(datee,3,hotel1,"single",217,client1,5);
+  reservation::Reservation reservation1(datee,3,hotel1,"double",4,client1,5);
   Reserv.push_back(reservation1);
   clients::Clients client114 ("test","test1","az");
   date::Date datee1(4,4,4); //mois day
-  reservation::Reservation reservation11(datee1,3,hotel1,"single",207,client114,6);
+  reservation::Reservation reservation11(datee1,3,hotel1,"double",5,client114,6);
   Reserv.push_back(reservation11);
   //std::cout<<tabClient;
   while(1){

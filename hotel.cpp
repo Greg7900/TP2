@@ -58,7 +58,7 @@ namespace hotel {
                chambre_save=*it_save;
             }
          }
-
+ 
          
          
       }chambre_save.updateStatus(1);
@@ -79,8 +79,18 @@ namespace hotel {
    	_ville=ville;
    }
    
-   void Hotel::updateNbChambre(chambre::Chambre nbChambre){
-   	_Chambre.push_back(nbChambre);
+   void Hotel::ajouterChambre(chambre::Chambre Chambre){
+   	_Chambre.push_back(Chambre);
+   }
+   void Hotel::delChambre(chambre::Chambre Chambre){
+      auto it=std::find_if(_Chambre.begin(),_Chambre.end(),[Chambre](const chambre::Chambre& ch) {return Chambre.numero()==ch.numero();});
+      if(it != _Chambre.end()){
+      _Chambre.erase(it);
+      std::cout<<" The room has been deleted "<<std::endl;
+      }else{std::cout<<" room not found "<<std::endl;
+
+  }
+    
    }
    
    void afficheReduite(hotel::Hotel hotel){
