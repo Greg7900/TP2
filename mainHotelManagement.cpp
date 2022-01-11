@@ -90,19 +90,22 @@ int roomselect (std::string type,std::vector<reservation::Reservation>& res,hote
   return numero;
 }
 
+
 void searchReserv (const std::vector<reservation::Reservation>& res, const hotel::Hotel& hotel){
+        std::cout << "\033[2J\033[1;1H"; //clear terminal
         int idRes;
         int flag=0;
         std::cout<< " Enter Reservation ID : " ;
-        std::cin>> idRes;
-        for(auto it=res.begin();it!=res.end();it++){
-         reservation::Reservation reservationTest=*it;
-         if(reservationTest.idReserv()==idRes){
-          displayReserv(reservationTest,1);
-          flag=1;
-        }
-        if(flag==0){std::cout<< " Reservation not found";}
-      }
+        do{
+        std::cin>> idRes; if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
+      }while()
+      auto it=std::find_if(res.begin(),res.end(),[idRes](const reservation::Reservation& rese) {return idRes==(rese.idReserv());});
+      if(it != res.end()){
+        displayReserv(*it,1);
+      }else{
+        std::cout<<" Reservation not found !"<<std::endl;
+
+  }
 }
 
 void custumerReserv(const std::vector<reservation::Reservation>& res , const hotel::Hotel& hotel){
@@ -122,8 +125,8 @@ void custumerReserv(const std::vector<reservation::Reservation>& res , const hot
           flag=1;
          }
       }
-      if(flag==0){std::cout<< " Reservation not found";}
-      std::cout<< "------------------------------------------------------------------------------------------------------------"<<std::endl;
+      if(flag==0){std::cout<< " Reservation not found"<<std::endl;}
+      std::cout<< "------------------------------------------------------------------------------------------------------------"<<std::endl<<std::endl;
 }
 
 
@@ -296,26 +299,17 @@ void deleteReserv (std::vector<reservation::Reservation>& res){
   std::cout << "\033[2J\033[1;1H"; //clear terminal
   int flag=0;
   std::cout<< "---------------------------------------------Delete Reservation----------------------------------------------"<<std::endl;
-  std::cout<< " Enter your Customer ID : " ;
-  std::string ID;
+  std::cout<< " Enter your reservation ID : " ;
+  int ID;
   std::cin>>ID;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
-  std::cout<< " enter the date of the initial reservation : "<<std::endl;  
-    date::Date date1=reservDate();
-   /* for(auto it=res.begin();it!=res.end();it++){
-          reservation::Reservation reservationTest=*it;
-          if( ((reservationTest.client()).GetID()==ID)&& (reservationTest.Ddate()==date1) ){
-        
-          res.erase(it);
+  auto it=std::find_if(res.begin(),res.end(),[ID](const reservation::Reservation& rese) {return ID==(rese.idReserv());});
+  if(it != res.end()){
+    res.erase(it);
+  }else{
+    std::cout<<" Reservation not found !";
 
-          flag=1;
-          }
-        }if(flag==0){std::cout<< " Reservation not found"<<std::endl;}*/
-    auto it=std::find_if(res.begin(),res.end(),[ID](const reservation::Reservation& rese) {std::cout<<" ggg";auto it2=(rese.client()).GetID();});
-    if(it2 != res.end()){
-      std::cout<<" testttttt";
-    }
+  }
     
-          std::cout<<" aaaaa";
 
 }
   
@@ -388,6 +382,7 @@ int main(int argc, char const *argv[]) {
       custumerReserv(Reserv,hotel1);
       break;
       case 4 :
+      std::cout << "\033[2J\033[1;1H"; //clear terminal
       std::cout<<Reserv;
       break;
       case 5 :
@@ -395,6 +390,9 @@ int main(int argc, char const *argv[]) {
       break;
       case 6 :
       deleteReserv(Reserv);
+      break;
+      default :
+      choix=0;
       break;
 
     }
