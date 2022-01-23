@@ -142,18 +142,18 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
     tab.push_back(client);
   }
   std::cout << std::endl;
-  std::cout<< " enter the date of the reservation : " ;  //Saisie d'une date
+  std::cout<< " enter the date of the reservation : \n" ;  //Saisie d'une date
   date::Date date=reservDate();
 
 
   std::cout<< " Enter night number : " ; //Saisie d'un nombre de nuit
   int nightnbr;
-  std::cin>> nightnbr;
+  std::cin>> nightnbr; if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
   if(nightnbr>=1){  //test de validité
   }else{
-    std::cout<< " The night number is invalid !!!" ;
+    std::cout<< " The night number is invalid !!! \n" ;
     std::cout<< " Enter night number : " ;
-    std::cin>> nightnbr;
+    std::cin>> nightnbr;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
   }
   
   std::cout<< " Enter your room type : \n";
@@ -339,7 +339,7 @@ int main(int argc, char const *argv[]) {
   hotel1.ajouterChambre(chambre9);
   hotel1.ajouterChambre(chambre10);
 
-  //test de la methode delete
+  std::cout<<" Test de la methode delete ";
   std::cout<< "---------------------------------------------Info Hotel---------------------------------------------\n\n";
   std::cout << hotel1 << std::endl;
   std::cout<< "----------------------------------------------------------------------------------------------------\n";
