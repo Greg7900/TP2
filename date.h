@@ -14,7 +14,7 @@
 namespace date {
 class Date {
 public:
-   Date(int month=1, int day=1, int year=2020);
+   Date(int month, int day, int year);
    int month() const;
    int day() const;
    int year() const;

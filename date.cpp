@@ -116,17 +116,19 @@ Date operator + (const Date& date, const int days) {
         Date tmp = date; // the current date
         int new_day = tmp.day() + days; // the new day is ok if new_day < end of month
         int new_month = tmp.month();
+        int new_year = tmp.year();
         int days_in_month = getDaysInMonth(tmp.month());
         while (new_day > days_in_month) { // end of the month
             new_day -= days_in_month; // the day in the next month
             new_month++;
             if (new_month > 12) { // end of the year
                 new_month = 1;
+                new_year++;
             }
             tmp.updateMonth(new_month);
             days_in_month = getDaysInMonth(tmp.month());
         }
-        return Date(new_month, new_day);
+        return Date(new_month, new_day, new_year);
     }
 
     Date operator + (const int days, const Date& date) {
@@ -159,20 +161,22 @@ Date operator + (const Date& date, const int days) {
         if (days <0) { //if days <0, we call Date + (-days)
             return date + (-days);
         }
+        int new_year=date.year();
         int new_month=date.month();
         int new_day = date.day()-days; // the new day is ok if > 0
         while (new_day <=0) {
             if (new_month==1) { // beginning of the year
                 new_month=12; // in december
                 new_day=31+new_day;
+                new_year--;
             }
             else { // other months than january
-                int days_in_previous_month = getDaysInMonth(Date(new_month-1,1).month());
+                int days_in_previous_month = getDaysInMonth(Date(new_month-1,1,1).month());
                 new_day = days_in_previous_month+new_day;
                 new_month--;
             }
         }
-        return Date(new_month, new_day);
+        return Date(new_month, new_day,new_year);
     }
 
     bool operator == (const Date& d1,const Date& d2) { // check for equality
@@ -187,15 +191,20 @@ Date operator + (const Date& date, const int days) {
     }
 
     bool operator < (const Date& d1, const Date& d2) {
-
+       
         if(d1.year()<d2.year()){
             return true;
-        }
-        else if (d1.month()<d2.month()) {
+           
+        }else if(d1.year()>d2.year()){
+            return false;
+            
+        }else {// same year
+            if (d1.month()<d2.month()) {
             return true;
         }
         else if (d1.month()>d2.month()) {
             return false;
+            
         } else { // same month
             if ( d1.day()<d2.day()) {
                 return true;
@@ -203,6 +212,7 @@ Date operator + (const Date& date, const int days) {
             else {
                 return false;
             }
+        }
         }
         return false;
     }

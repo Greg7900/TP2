@@ -54,7 +54,7 @@ date::Date reservDate (void){
 void displayReserv (const reservation::Reservation& res, int choix){
         std::cout << std::endl;
         if(choix==1){
-        std::cout << "\033[2J\033[1;1H"; //clear terminal//clear terminal
+        //std::cout << "\033[2J\033[1;1H"; //clear terminal//clear terminal
         std::cout<< "---------------------------------------------Reservation saisie---------------------------------------------\n";
         std::cout<<res;
         std::cout<< "------------------------------------------------------------------------------------------------------------\n";
@@ -174,36 +174,36 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
    if(hotel.chambreAvailable(type))                               // test de validité de la chambre
     { 
      
-      int idReserv=(res.back()).idReserv()+1; // calcul de l'id de reservation par rapport a la derniere reservation pour éviter les doublon en cas de suppression d'une reservation
-      int roomNumber=roomselect(type,res,hotel);
-      reservation::Reservation reservation1(date,nightnbr,hotel,type,roomNumber, client,idReserv);
       
-      if(res.size()>=0){ // si aucune reservation n'existe 
-
+      
+      if(res.size()==0){ // si aucune reservation n'existe 
+        int idReserv=1; // calcul de l'id de reservation par rapport a la derniere reservation pour éviter les doublon en cas de suppression d'une reservation
+        int roomNumber=1;//roomselect(type,res,hotel);
+        reservation::Reservation reservation1(date,nightnbr,hotel,type,roomNumber, client,idReserv);
         res.push_back(reservation1);
         displayReserv(reservation1,1);
         
       }else{
-
-
-        for(auto it=res.begin();it!=res.end();it++){
-         reservation::Reservation reservationTest=*it;
-         if(reservation1.roomNumber()==reservationTest.roomNumber()){
-
-            if( (reservationTest.nightNbr()+reservationTest.Ddate() )< (reservation1.Ddate()) ){
-            std::cout<< " The reservation has been entered !\n";
-            }else{
-            std::cout<< " Chamber Unavailable for this date!\n";
-            res.push_back(reservation1);
-            displayReserv(reservation1,1);
-          }
-          }else{
-            res.push_back(reservation1);
-            displayReserv(reservation1,1);
-          }
-
+        
+        int idReserv=(res.back()).idReserv()+1; // calcul de l'id de reservation par rapport a la derniere reservation pour éviter les doublon en cas de suppression d'une reservation
+        int roomNumber=1;//roomselect(type,res,hotel);
+        reservation::Reservation reservation2(date,nightnbr,hotel,type,roomNumber, client,idReserv);
       
+        auto it=std::find_if(res.begin(),res.end(),[roomNumber](const reservation::Reservation& rese) {return roomNumber==(rese.roomNumber());}); // on test si il y a déja une rservation au meme nom, si oui on teste la date
+        if(it != res.end()){
+            if( ((*it).nightNbr()+(*it).Ddate() )< (reservation2.Ddate()) ){
+                std::cout<< " The reservation has been entered !\n";
+                res.push_back(reservation2);
+               displayReserv(reservation2,1);
+            }else{
+                std::cout<< " Chamber Unavailable for this date!\n";
+            }
+        }else{
+          res.push_back(reservation2);
+          displayReserv(reservation2,1);
+          std::cout<< " The reservation has been entered !! \n";
         }
+
       }
 
    }else{
