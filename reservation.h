@@ -8,6 +8,7 @@ namespace reservation{
 class Reservation /*: public hotel*/{
 public:
    Reservation(date::Date Ddate, int nightNbr, hotel::Hotel hotel,std::string type,int roomNumber,clients::Clients client,int idReserv);
+   //getter
    date::Date Ddate() const;
    int nightNbr() const;
    int idReserv() const;
@@ -16,13 +17,13 @@ public:
    clients::Clients client() const;
    hotel::Hotel hotel() const;
    int prix()const;
+   //setter
    void updateDdate(date::Date Ddate);
    void updateNightNbr(int nightNbr);
    void updateType(std::string type);
    void updateHotel(hotel::Hotel hotel);
    void updateClient(clients::Clients client);
    void updateRoonumber(int roomNumber);
-   /*void chambreSelect();*/
    void CalculPrix();
    
 private:
@@ -43,5 +44,3 @@ bool operator == (const Reservation& r1,const Reservation& r2);
 #endif
 }
 
-//faire test available dans hotel pour connaitre la dispo dans l'hotel
-//et faire test pour savoir il y a deja une reserv sur la chambre

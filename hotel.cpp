@@ -20,13 +20,13 @@ namespace hotel {
    	return _Chambre.size();
    }
    
-   void Hotel::displayChambre()const{
+   void Hotel::displayChambre()const{  
       for(auto it=_Chambre.begin(); it!=_Chambre.end();it++){
          std::cout<<*it<<std::endl;
       }
    }
    
-   bool Hotel::chambreAvailable(std::string type){
+   bool Hotel::chambreAvailable(std::string type){ // verifie si l'hotel a ce type de chambre
       for(auto it=_Chambre.begin(); it!=_Chambre.end();it++){
          chambre::Chambre chambre1=*it;
          if(chambre1.type()==type){
@@ -44,28 +44,6 @@ namespace hotel {
       }
       return 0;
    }
-      int Hotel::chambreSelect(std::string type){
-      int numero=32767;
-      auto it_save= _Chambre.begin();
-      chambre::Chambre chambre_save=*it_save;
-
-      for(auto it=_Chambre.begin(); it!=_Chambre.end();it++){
-         chambre::Chambre chambre1=*it;
-         if(chambre1.type()==type){
-            if((chambre1.numero()<numero)&&(chambre1.status()=="not reserved")){
-               numero=chambre1.numero();
-               it_save=it;
-               chambre_save=*it_save;
-            }
-         }
- 
-         
-         
-      }chambre_save.updateStatus(1);
-      *it_save=chambre_save;
-      return numero;
-   }
-
    
    void Hotel::updateIdUnique(std::string idUnique){
    	_idUnique=idUnique;
@@ -93,12 +71,12 @@ namespace hotel {
     
    }
    
-   void afficheReduite(hotel::Hotel hotel){
+   void afficheReduite(hotel::Hotel hotel){ // affichage de l'hotel sans les chambres
       std::cout<< " Identifiant unique : " + hotel.idUnique() + " | Nom : " + hotel.nom()+ " | ville : "+ hotel.ville()+ " | Nombre de chambre : "+ std::to_string(hotel.NbChambre())<< std::endl;
 
    }
    
-   std::ostream& operator<<(std::ostream& os, const Hotel& hotel) {
+   std::ostream& operator<<(std::ostream& os, const Hotel& hotel) { // affichage complet
         os << " Identifiant unique : " + hotel.idUnique() + " | Nom : " + hotel.nom()+ " | ville : "+ hotel.ville()+ " | Nombre de chambre : "+ std::to_string(hotel.NbChambre())<< std::endl;
 
         hotel.displayChambre();

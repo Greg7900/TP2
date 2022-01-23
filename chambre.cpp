@@ -11,9 +11,6 @@ namespace chambre{
     int Chambre::numero() const {
         return _numero;
     }
-    std::string Chambre::status() const {
-        return _status;
-    }
     std::string Chambre::type() const {
         return _type;
     }
@@ -27,18 +24,11 @@ namespace chambre{
     void Chambre::updateType(std::string type) {
         _type = type;
     }
-    void Chambre::updateStatus(int status) {
-        if(status==1){
-            _status="reserved";
-        }else{
-            _status="not reserved";
-        }
-    }
     std::string toString(Chambre chambre){
-        return  " prix : " + std::to_string(chambre.prix()) + " numero : " + std::to_string(chambre.numero()) + " type : "+ chambre.type()+" State = "+chambre.status(); ;
+        return  " prix : " + std::to_string(chambre.prix()) + " numero : " + std::to_string(chambre.numero()) + " type : "+ chambre.type() ;
     }
     std::ostream& operator<<(std::ostream& os, const Chambre& chambre) {
-        os << " prix : " + std::to_string(chambre.prix()) + " numero : " + std::to_string(chambre.numero())+ " type : "+ chambre.type()+" State = "+chambre.status();
+        os << " prix : " + std::to_string(chambre.prix()) + " numero : " + std::to_string(chambre.numero())+ " type : "+ chambre.type();
         return os;
     }
 }

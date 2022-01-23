@@ -23,7 +23,7 @@ public:
    bool chambreAvailable(std::string type);
    void setReserved(int roomState,int numChambre);
    int displayPrice(std::string type) ;
-   int chambreSelect(std::string type);
+   
    
 private:
    std::string _idUnique;
