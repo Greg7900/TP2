@@ -64,21 +64,24 @@ void displayReserv (const reservation::Reservation& res, int choix){
 }
 
 int roomselect (std::string type,std::vector<reservation::Reservation>& res,hotel::Hotel& hotel){
-  int numero=32767;
+  int numero=32767,numero2=0;
+  int flag=0;
+  date::Date date(31,12,9999);
     for(auto it=hotel.chambre().begin(); it!=hotel.chambre().end();it++){
        chambre::Chambre chambre1=*it;
        bool reservee=false;
-      
-      for(auto it1=res.begin();it1!=res.end();it1++){
+      for(auto it1=res.begin();it1!=res.end();it1++){ // algo pour verifier si le numero à deja été saisie
         reservation::Reservation reservationTest=*it1;
    
         if(chambre1.type()==type){
+          
           if(reservationTest.roomNumber()== (chambre1.numero()) ) {
             reservee = true;
           }
         }
       }
-       if ((reservee==false)&&(chambre1.type()==type))
+
+       if ((reservee==false)&&(chambre1.type()==type)) // algo pour trouver le plus PETIT numéro
        {
           if (numero > chambre1.numero())
           {
@@ -87,7 +90,30 @@ int roomselect (std::string type,std::vector<reservation::Reservation>& res,hote
        }
     }
 
-    std::cout << hotel<< std::endl;
+    for(auto it=hotel.chambre().begin(); it!=hotel.chambre().end();it++){ // pour trouver le plus GRAND numero de chambre
+       chambre::Chambre chambre1=*it; 
+       if(chambre1.type()==type){
+         if(chambre1.numero()>numero2){
+            numero2=chambre1.numero();
+                    
+           }
+       }
+    }
+    for(auto it1=res.begin();it1!=res.end();it1++){ // algo pour trouver la réservation qui se fini la plus tot, une fois que le plus grand numero de chambre aura été attribuer 
+      reservation::Reservation reservationTest=*it1;
+      if(reservationTest.roomNumber()== numero2 ) {
+        flag=1;
+      }
+    }
+    if(flag==1){
+      for(auto it1=res.begin();it1!=res.end();it1++){ // une fois que flag=1 cela voudra dire le dernier numéro à été attribuer et donc que mtn on attribue les numéros par rapport a la plus petite date de fin 
+        reservation::Reservation reservationTest=*it1;
+        if((reservationTest.Ddate()+reservationTest.nightNbr())<date){
+          date=reservationTest.Ddate();
+          numero=reservationTest.roomNumber();
+        }
+      }
+    }   
   return numero;
 }
 
@@ -148,12 +174,12 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
 
   std::cout<< " Enter night number : " ; //Saisie d'un nombre de nuit
   int nightnbr;
-  std::cin>> nightnbr; if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
+  std::cin>> nightnbr; if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  } // Ignore les mauvaises saisies
   if(nightnbr>=1){  //test de validité
   }else{
     std::cout<< " The night number is invalid !!! \n" ;
     std::cout<< " Enter night number : " ;
-    std::cin>> nightnbr;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
+    std::cin>> nightnbr;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }  // Ignore les mauvaises saisies
   }
   
   std::cout<< " Enter your room type : \n";
@@ -161,8 +187,8 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
   std::cout<< "    Press 2 for : Double \n";
   std::cout<< "    Press 3 for : Suite \n";
   int choix;
-  std::cin>>choix;
-  switch (choix) {  // Choix du type de chambre par switch case pour éviter les mauvaises saisie
+  std::cin>>choix;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }  // Ignore les mauvaises saisies
+  switch (choix) {   // Choix du type de chambre par switch case pour éviter les mauvaises saisie
     case 1: type= "single";std::cout << " You choose the "<<type<< " type\n";break;
     case 2: type= "double";std::cout << " You choose the "<<type<< " type\n";break;
     case 3: type= "suite"; std::cout << " You choose the "<<type<< " type\n";break;
@@ -171,13 +197,13 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
   
   
   
-   if(hotel.chambreAvailable(type))                               // test de validité de la chambre
+   if(hotel.chambreAvailable(type))    // test de validité de la chambre
     { 
      
       
       
       if(res.size()==0){ // si aucune reservation n'existe 
-        int idReserv=1; // calcul de l'id de reservation par rapport a la derniere reservation pour éviter les doublon en cas de suppression d'une reservation
+        int idReserv=1;  
         int roomNumber=roomselect(type,res,hotel);
         reservation::Reservation reservation1(date,nightnbr,hotel,type,roomNumber, client,idReserv);
         res.push_back(reservation1);
@@ -316,7 +342,7 @@ int main(int argc, char const *argv[]) {
   std::vector<clients::Clients> tabClient;
   std::vector<reservation::Reservation> Reserv;
   hotel::Hotel hotel1("OCEAN11","Le Bellagio","Las Vegas");
-  chambre::Chambre chambre1(100,1,"single");
+  chambre::Chambre chambre(100,1,"single");
   chambre::Chambre chambre2(100,2,"single");
   chambre::Chambre chambre3(100,3,"single");
   chambre::Chambre chambre4(125,4,"double");
@@ -328,7 +354,7 @@ int main(int argc, char const *argv[]) {
   chambre::Chambre chambre10(210,10,"suite");
 
  
-  hotel1.ajouterChambre(chambre1);
+  hotel1.ajouterChambre(chambre);
   hotel1.ajouterChambre(chambre2);
   hotel1.ajouterChambre(chambre3);
   hotel1.ajouterChambre(chambre4);
@@ -339,7 +365,7 @@ int main(int argc, char const *argv[]) {
   hotel1.ajouterChambre(chambre9);
   hotel1.ajouterChambre(chambre10);
 
-  std::cout<<" Test de la methode delete ";
+  std::cout<<" Test de la methode delete \n";
   std::cout<< "---------------------------------------------Info Hotel---------------------------------------------\n\n";
   std::cout << hotel1 << std::endl;
   std::cout<< "----------------------------------------------------------------------------------------------------\n";
@@ -365,7 +391,7 @@ int main(int argc, char const *argv[]) {
     std::cout<< " Display all reservation : 4\n";
     std::cout<<" Modify a reservations : 5 \n"<<" Delete a reservations : 6 \n\n";
 
-    std::cin>>choix;
+    std::cin>>choix;if(std::cin.fail()) { std::cin.clear(); std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  }
     std::cout<< " You have chosen the number "<<choix<<std::endl;
     switch (choix){
       case 1 :
