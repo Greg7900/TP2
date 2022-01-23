@@ -178,7 +178,7 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
       
       if(res.size()==0){ // si aucune reservation n'existe 
         int idReserv=1; // calcul de l'id de reservation par rapport a la derniere reservation pour éviter les doublon en cas de suppression d'une reservation
-        int roomNumber=1;//roomselect(type,res,hotel);
+        int roomNumber=roomselect(type,res,hotel);
         reservation::Reservation reservation1(date,nightnbr,hotel,type,roomNumber, client,idReserv);
         res.push_back(reservation1);
         displayReserv(reservation1,1);
@@ -186,7 +186,7 @@ void createReserv (std::vector<clients::Clients>& tab,std::vector<reservation::R
       }else{
         
         int idReserv=(res.back()).idReserv()+1; // calcul de l'id de reservation par rapport a la derniere reservation pour éviter les doublon en cas de suppression d'une reservation
-        int roomNumber=1;//roomselect(type,res,hotel);
+        int roomNumber=roomselect(type,res,hotel);
         reservation::Reservation reservation2(date,nightnbr,hotel,type,roomNumber, client,idReserv);
       
         auto it=std::find_if(res.begin(),res.end(),[roomNumber](const reservation::Reservation& rese) {return roomNumber==(rese.roomNumber());}); // on test si il y a déja une rservation au meme nom, si oui on teste la date
