@@ -12,9 +12,9 @@
 			std::string Getlastname() const;
 			std::string GetID() const;
 
-		void Setfirstname(std::string firstname);
-		void Setlastname(std::string lastname);
-		void SetID(std::string ID);
+			void Setfirstname(std::string firstname);
+			void Setlastname(std::string lastname);
+			void SetID(std::string ID);
 
 	private:
 

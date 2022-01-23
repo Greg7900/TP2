@@ -29,7 +29,6 @@ namespace clients {
     }
 
 
-
 //Setter
 	void Clients::Setfirstname(std::string firstname){
 	_firstname = firstname;
