@@ -51,7 +51,7 @@ date::Date reservDate (void){
    return date;
 }
 
-void displayReserv (const reservation::Reservation& res, int choix){
+void displayReserv (const reservation::Reservation& res, int choix){ // la variable choix permet juste un affichage different
         std::cout << std::endl;
         if(choix==1){
         //std::cout << "\033[2J\033[1;1H"; //clear terminal//clear terminal
@@ -67,21 +67,21 @@ int roomselect (std::string type,std::vector<reservation::Reservation>& res,hote
   int numero=32767,numero2=0;
   int flag=0;
   date::Date date(31,12,9999);
-    for(auto it=hotel.chambre().begin(); it!=hotel.chambre().end();it++){
+    for(auto it=hotel.chambre().begin(); it!=hotel.chambre().end();it++){ // on parcours le vecteur chambre pour obtenir leur numero
        chambre::Chambre chambre1=*it;
-       bool reservee=false;
-      for(auto it1=res.begin();it1!=res.end();it1++){ // algo pour verifier si le numero à deja été saisie
+       bool reservee=false;   //la variable reservé permet de savoir si un numero de chambre a été trouver dans une des reservations
+      for(auto it1=res.begin();it1!=res.end();it1++){ // On parcours le vecteur reservation pour verifier si la chambre est prise
         reservation::Reservation reservationTest=*it1;
    
-        if(chambre1.type()==type){
+        if(chambre1.type()==type){ // test pour ne recuperer que les numeros de chambre du bon type
           
-          if(reservationTest.roomNumber()== (chambre1.numero()) ) {
+          if(reservationTest.roomNumber()== (chambre1.numero()) ) { // test pour verifier si le numero à deja été saisie
             reservee = true;
           }
         }
       }
 
-       if ((reservee==false)&&(chambre1.type()==type)) // algo pour trouver le plus PETIT numéro
+       if ((reservee==false)&&(chambre1.type()==type)) // test pour trouver le plus PETIT numéro, 
        {
           if (numero > chambre1.numero())
           {
@@ -99,7 +99,7 @@ int roomselect (std::string type,std::vector<reservation::Reservation>& res,hote
            }
        }
     }
-    for(auto it1=res.begin();it1!=res.end();it1++){ // algo pour trouver la réservation qui se fini la plus tot, une fois que le plus grand numero de chambre aura été attribuer 
+    for(auto it1=res.begin();it1!=res.end();it1++){ // test pour trouver la réservation qui se fini la plus tot, une fois que le plus grand numero de chambre aura été attribuer 
       reservation::Reservation reservationTest=*it1;
       if(reservationTest.roomNumber()== numero2 ) {
         flag=1;
@@ -141,10 +141,10 @@ void custumerReserv(const std::vector<reservation::Reservation>& res , const hot
       for(auto it=res.begin();it!=res.end();it++){
          reservation::Reservation reservationTest=*it;
          if(reservationTest.client().GetID()==idClient){
-          displayReserv(reservationTest,2); // 2 pour pouvoir afficher plusieurs reservation si choix = 1  un clear du terminal s'executera et un ne pourra voir que la derniere reservation
+          displayReserv(reservationTest,2); 
           flag=1;
          }else if(reservationTest.client().Getlastname()==idClient){
-          displayReserv(reservationTest,2); // 2 pour pouvoir afficher plusieurs reservation 
+          displayReserv(reservationTest,2); 
           flag=1;
          }
       }
